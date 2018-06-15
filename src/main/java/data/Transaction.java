@@ -14,7 +14,7 @@ public class Transaction {
 
 	public PublicKey sender; // chave publica da origem
 	public PublicKey reciepient; // chave publica do destinatário 
-	public float value;
+	public double value;
 	public byte[] signature; // this is to prevent anybody else from spending funds in our wallet.
 
 	public List<TransactionInput> inputs = new ArrayList<>();
@@ -22,8 +22,7 @@ public class Transaction {
 
 	private static int sequence = 0; // contador de transações
 
-	// Constructor: 
-	public Transaction(PublicKey from, PublicKey to, float value,  List<TransactionInput> inputs) {
+	public Transaction(PublicKey from, PublicKey to, double value,  List<TransactionInput> inputs) {
 		this.sender = from;
 		this.reciepient = to;
 		this.value = value;
@@ -36,17 +35,17 @@ public class Transaction {
 		return CryptoUtil.applySha256(
 				CryptoUtil.getStringFromKey(sender) +
 				CryptoUtil.getStringFromKey(reciepient) +
-				Float.toString(value) + sequence
+				String.valueOf(value) + sequence
 				);
 	}
 	
 	public void generateSignature(PrivateKey privateKey) {
-		String data = CryptoUtil.getStringFromKey(sender) + CryptoUtil.getStringFromKey(reciepient) + Float.toString(value)	;
+		String data = CryptoUtil.getStringFromKey(sender) + CryptoUtil.getStringFromKey(reciepient) + String.valueOf(value)	;
 		signature = CryptoUtil.applyECDSASig(privateKey,data);		
 	}
 	
 	public boolean verifySignature() {
-		String data = CryptoUtil.getStringFromKey(sender) + CryptoUtil.getStringFromKey(reciepient) + Float.toString(value)	;
+		String data = CryptoUtil.getStringFromKey(sender) + CryptoUtil.getStringFromKey(reciepient) + String.valueOf(value)	;
 		return CryptoUtil.verifyECDSASig(sender, data, signature);
 	}
 
@@ -90,11 +89,11 @@ public class Transaction {
 		this.reciepient = reciepient;
 	}
 
-	public float getValue() {
+	public double getValue() {
 		return value;
 	}
 
-	public void setValue(float value) {
+	public void setValue(double value) {
 		this.value = value;
 	}
 

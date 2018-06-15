@@ -89,7 +89,7 @@ public class Blockchain {
 		}
 		
 		//Generate transaction outputs:
-		float leftOver = t.getInputsValue() - t.getValue(); //get value of inputs then the left over change:
+		double leftOver = t.getInputsValue() - t.getValue(); //get value of inputs then the left over change:
 		t.setTransactionId( t.calulateHash() );
 		t.getOutputs().add(new TransactionOutput( t.getReciepient(), t.getValue(),t.getTransactionId())); //send value to recipient
 		t.getOutputs().add(new TransactionOutput( t.getSender(), leftOver, t.getTransactionId())); //send the left over 'change' back to sender		
@@ -112,11 +112,11 @@ public class Blockchain {
 	/**
 	 * inicializa a cadeia (transfere 100 para a carteira passada como argumento)
 	 */
-	public Block genesis( Wallet walletA ) {
+	public Block genesis( Wallet walletA, double quantia ) {
 		Wallet coinbase = new Wallet();
 		
 		//create genesis transaction, which sends 100 NoobCoin to walletA: 
-		Transaction genesisTransaction = new Transaction(coinbase.getPublicKey(), walletA.getPublicKey(), 100f, null);
+		Transaction genesisTransaction = new Transaction(coinbase.getPublicKey(), walletA.getPublicKey(), quantia, null);
 		genesisTransaction.generateSignature(coinbase.getPrivateKey());	 //manually sign the genesis transaction	
 		
 		genesisTransaction.transactionId = "0"; //manually set the transaction id

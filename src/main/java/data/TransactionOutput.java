@@ -8,15 +8,14 @@ public class TransactionOutput {
 	
 	private String id;
 	private PublicKey reciepient; //o novo dono das moedas
-	private float value; //the amount of coins they own
+	private double value; //the amount of coins they own
 	private String parentTransactionId; //the id of the transaction this output was created in
 	
-	//Constructor
-	public TransactionOutput(PublicKey reciepient, float value, String parentTransactionId) {
+	public TransactionOutput(PublicKey reciepient, double value, String parentTransactionId) {
 		this.reciepient = reciepient;
 		this.value = value;
 		this.parentTransactionId = parentTransactionId;
-		this.id = CryptoUtil.applySha256(CryptoUtil.getStringFromKey(reciepient)+Float.toString(value)+parentTransactionId);
+		this.id = CryptoUtil.applySha256(CryptoUtil.getStringFromKey(reciepient)+String.valueOf(value)+parentTransactionId);
 	}
 	
 	//Check if coin belongs to you
@@ -36,7 +35,7 @@ public class TransactionOutput {
 	public void setReciepient(PublicKey reciepient) {
 		this.reciepient = reciepient;
 	}
-	public float getValue() {
+	public double getValue() {
 		return value;
 	}
 	public void setValue(float value) {

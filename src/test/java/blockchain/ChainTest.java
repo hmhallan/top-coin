@@ -22,7 +22,7 @@ public class ChainTest {
 		Wallet walletA = new Wallet();
 		Wallet walletB = new Wallet();
 		
-		Block genesis = Blockchain.get().genesis( walletA );
+		Block genesis = Blockchain.get().genesis( walletA, 100d );
 		
 		//testing
 		Block block1 = new Block(genesis.getHash());

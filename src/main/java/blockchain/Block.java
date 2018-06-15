@@ -14,7 +14,7 @@ public class Block {
 	private String previousHash;
 	
 	public String merkleRoot;
-	public List<Transaction> transactions; //our data will be a simple message.
+	public List<Transaction> transactions; //transações do bloco
 	
 	private long timestamp;
 	
@@ -55,14 +55,17 @@ public class Block {
 		System.out.println("Bloco mineirado!!! : " + hash);
 	}
 	
-	//Add transactions to this block
+	//Adiciona uma transação para este bloco
 	public boolean addTransaction(Transaction transaction) {
-		//process transaction and check if valid, unless block is genesis block then ignore.
-		if(transaction == null) return false;		
+		if(transaction == null) {
+			return false;		
+		}
+
+		//se não for o bloco 'genesis', valida a transação
 		if((!"0".equals(previousHash))) {
 			
 			if((Blockchain.get().processTransaction( transaction ) != true)) {
-				System.out.println("Transaction failed to process. Discarded.");
+				System.out.println("Falha ao processar transação. Descartada.");
 				return false;
 			}
 		}
